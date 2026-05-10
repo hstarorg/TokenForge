@@ -17,65 +17,40 @@ export interface ChainSpec {
   id: string;
   name: string;
   status: Status;
-  assets: Asset[];
 }
 
 export const CHAINS: ChainSpec[] = [
-  {
-    id: "evm",
-    name: "EVM",
-    status: "soon",
-    assets: [
-      { id: "erc20",   name: "ERC-20",   status: "soon" },
-      { id: "nft",     name: "ERC-721",  status: "soon" },
-      { id: "erc1155", name: "ERC-1155", status: "soon" },
-    ],
-  },
-  {
-    id: "solana",
-    name: "Solana",
-    status: "soon",
-    assets: [
-      { id: "spl", name: "SPL Token", status: "soon" },
-      { id: "nft", name: "NFT",       status: "soon" },
-    ],
-  },
-  {
-    id: "sui",
-    name: "Sui",
-    status: "soon",
-    assets: [
-      { id: "coin", name: "Coin", status: "soon" },
-      { id: "nft",  name: "NFT",  status: "soon" },
-    ],
-  },
-  {
-    id: "aptos",
-    name: "Aptos",
-    status: "soon",
-    assets: [
-      { id: "coin", name: "Coin", status: "soon" },
-      { id: "nft",  name: "NFT",  status: "soon" },
-    ],
-  },
-  {
-    id: "ton",
-    name: "TON",
-    status: "soon",
-    assets: [
-      { id: "jetton", name: "Jetton", status: "soon" },
-      { id: "nft",    name: "NFT",    status: "soon" },
-    ],
-  },
-  {
-    id: "starknet",
-    name: "Starknet",
-    status: "soon",
-    assets: [
-      { id: "erc20", name: "ERC-20", status: "soon" },
-      { id: "nft",   name: "NFT",    status: "soon" },
-    ],
-  },
+  { id: "evm",      name: "EVM",      status: "soon" },
+  { id: "solana",   name: "Solana",   status: "soon" },
+  { id: "sui",      name: "Sui",      status: "soon" },
+  { id: "aptos",    name: "Aptos",    status: "soon" },
+  { id: "ton",      name: "TON",      status: "soon" },
+  { id: "starknet", name: "Starknet", status: "soon" },
+];
+
+const SOLANA_ASSETS: Asset[] = [
+  { id: "spl", name: "SPL Token", status: "soon" },
+  { id: "nft", name: "NFT",       status: "soon" },
+];
+
+const SUI_ASSETS: Asset[] = [
+  { id: "coin", name: "Coin", status: "soon" },
+  { id: "nft",  name: "NFT",  status: "soon" },
+];
+
+const APTOS_ASSETS: Asset[] = [
+  { id: "coin", name: "Coin", status: "soon" },
+  { id: "nft",  name: "NFT",  status: "soon" },
+];
+
+const TON_ASSETS: Asset[] = [
+  { id: "jetton", name: "Jetton", status: "soon" },
+  { id: "nft",    name: "NFT",    status: "soon" },
+];
+
+const STARKNET_ASSETS: Asset[] = [
+  { id: "erc20", name: "ERC-20", status: "soon" },
+  { id: "nft",   name: "NFT",    status: "soon" },
 ];
 
 export const router = createBrowserRouter([
@@ -84,17 +59,68 @@ export const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <Home /> },
-      ...CHAINS.map((c) => ({
-        path: `mint/${c.id}`,
-        element: c.id === "evm" ? <EvmLayout /> : <ChainShell chainId={c.id} />,
+
+      {
+        path: "mint/evm",
+        element: <EvmLayout />,
         children: [
-          { index: true, element: <Navigate to={c.assets[0].id} replace /> },
-          ...c.assets.map((a) => ({
-            path: a.id,
-            element: <ComingSoon />,
-          })),
+          { index: true, element: <Navigate to="erc20" replace /> },
+          { path: "erc20",   element: <ComingSoon /> },
+          { path: "nft",     element: <ComingSoon /> },
+          { path: "erc1155", element: <ComingSoon /> },
         ],
-      })),
+      },
+
+      {
+        path: "mint/solana",
+        element: <ChainShell chainId="solana" assets={SOLANA_ASSETS} />,
+        children: [
+          { index: true, element: <Navigate to="spl" replace /> },
+          { path: "spl", element: <ComingSoon /> },
+          { path: "nft", element: <ComingSoon /> },
+        ],
+      },
+
+      {
+        path: "mint/sui",
+        element: <ChainShell chainId="sui" assets={SUI_ASSETS} />,
+        children: [
+          { index: true, element: <Navigate to="coin" replace /> },
+          { path: "coin", element: <ComingSoon /> },
+          { path: "nft",  element: <ComingSoon /> },
+        ],
+      },
+
+      {
+        path: "mint/aptos",
+        element: <ChainShell chainId="aptos" assets={APTOS_ASSETS} />,
+        children: [
+          { index: true, element: <Navigate to="coin" replace /> },
+          { path: "coin", element: <ComingSoon /> },
+          { path: "nft",  element: <ComingSoon /> },
+        ],
+      },
+
+      {
+        path: "mint/ton",
+        element: <ChainShell chainId="ton" assets={TON_ASSETS} />,
+        children: [
+          { index: true, element: <Navigate to="jetton" replace /> },
+          { path: "jetton", element: <ComingSoon /> },
+          { path: "nft",    element: <ComingSoon /> },
+        ],
+      },
+
+      {
+        path: "mint/starknet",
+        element: <ChainShell chainId="starknet" assets={STARKNET_ASSETS} />,
+        children: [
+          { index: true, element: <Navigate to="erc20" replace /> },
+          { path: "erc20", element: <ComingSoon /> },
+          { path: "nft",   element: <ComingSoon /> },
+        ],
+      },
+
       { path: "*", element: <ComingSoon /> },
     ],
   },
