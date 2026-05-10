@@ -1,29 +1,21 @@
 import { Link } from "react-router-dom";
-import { ROUTES, type MintRoute } from "../routes";
+import { useTranslation } from "react-i18next";
+import { CHAINS } from "../routes";
 
 export function Home() {
-  const byChain = ROUTES.reduce<Record<string, MintRoute[]>>((acc, r) => {
-    (acc[r.chain] ??= []).push(r);
-    return acc;
-  }, {});
-
+  const { t } = useTranslation();
   return (
     <div>
-      <h1>多链铸币</h1>
-      <p className="lead">选择链与资产类型开始铸造。</p>
-      <div className="matrix">
-        {Object.entries(byChain).map(([chain, items]) => (
-          <section key={chain} className="chain">
-            <h2>{chain}</h2>
-            <ul>
-              {items.map((r) => (
-                <li key={r.path}>
-                  <Link to={r.path}>{r.asset}</Link>
-                  {r.status === "soon" && <span className="badge">Coming Soon</span>}
-                </li>
-              ))}
-            </ul>
-          </section>
+      <h1>{t("home.title")}</h1>
+      <p className="lead">{t("home.lead")}</p>
+      <div className="asset-grid">
+        {CHAINS.map((c) => (
+          <Link key={c.id} to={`/mint/${c.id}`} className="asset-card">
+            <span className="asset-name">{c.name}</span>
+            {c.status === "soon" && (
+              <span className="badge">{t("home.comingSoon")}</span>
+            )}
+          </Link>
         ))}
       </div>
     </div>

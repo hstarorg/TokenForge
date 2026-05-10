@@ -1,0 +1,15 @@
+{
+  "header": {
+    "logo": "TokenForge"
+  },
+  "home": {
+    "title": "Multi-chain Token Mint",
+    "lead": "Pick a chain to start.",
+    "comingSoon": "Coming Soon"
+  },
+  "comingSoon": {
+    "title": "Coming Soon",
+    "body": "This route is not implemented yet:",
+    "back": "← Back to home"
+  }
+}
