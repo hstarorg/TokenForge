@@ -1,0 +1,34 @@
+node_modules/
+dist/
+build/
+out/
+
+.env
+.env.local
+.env.*.local
+
+.DS_Store
+.vscode/
+.idea/
+*.log
+
+# Foundry (EVM)
+contracts/evm/cache/
+contracts/evm/out/
+contracts/evm/broadcast/
+
+# Anchor (Solana)
+contracts/solana/target/
+contracts/solana/.anchor/
+contracts/solana/test-ledger/
+
+# Move (Sui / Aptos)
+contracts/sui/build/
+contracts/aptos/build/
+
+# TON (Blueprint)
+contracts/ton/build/
+contracts/ton/dist/
+
+# Starknet (Scarb)
+contracts/starknet/target/
