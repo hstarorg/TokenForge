@@ -1,15 +1,15 @@
 import { NavLink } from "react-router-dom";
-import type { Asset } from "../routes";
+import { getChain } from "../routes";
 
 interface Props {
   chainId: string;
-  assets: Asset[];
 }
 
-export function ChainTabs({ chainId, assets }: Props) {
+export function ChainTabs({ chainId }: Props) {
+  const chain = getChain(chainId);
   return (
     <nav className="asset-tabs">
-      {assets.map((a) => (
+      {chain.assets.map((a) => (
         <NavLink
           key={a.id}
           to={`/mint/${chainId}/${a.id}`}

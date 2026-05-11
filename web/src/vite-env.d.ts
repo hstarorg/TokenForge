@@ -2,6 +2,7 @@
 
 interface ImportMetaEnv {
   readonly VITE_RPC_SEPOLIA?: string;
+  readonly VITE_RPC_BASE_SEPOLIA?: string;
   readonly VITE_RPC_MAINNET?: string;
 }
 

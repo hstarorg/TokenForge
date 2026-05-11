@@ -12,9 +12,13 @@ export function Home() {
         {CHAINS.map((c) => (
           <Link key={c.id} to={`/mint/${c.id}`} className="asset-card">
             <span className="asset-name">{c.name}</span>
-            {c.status === "soon" && (
-              <span className="badge">{t("home.comingSoon")}</span>
-            )}
+            <div className="asset-tags">
+              {c.assets.map((a) => (
+                <span key={a.id} className={`asset-tag asset-tag-${a.status}`}>
+                  {a.name}
+                </span>
+              ))}
+            </div>
           </Link>
         ))}
       </div>
