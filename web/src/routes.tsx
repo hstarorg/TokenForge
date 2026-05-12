@@ -7,6 +7,8 @@ import { EvmLayout } from "./chains/evm/EvmLayout";
 import { MintPage as EvmErc20MintPage } from "./chains/evm/erc20/MintPage";
 import { SolanaLayout } from "./chains/solana/SolanaLayout";
 import { MintPage as SolanaSplMintPage } from "./chains/solana/spl/MintPage";
+import { TonLayout } from "./chains/ton/TonLayout";
+import { MintPage as TonJettonMintPage } from "./chains/ton/jetton/MintPage";
 
 export type Status = "live" | "soon";
 
@@ -60,7 +62,7 @@ export const CHAINS: ChainSpec[] = [
     id: "ton",
     name: "TON",
     assets: [
-      { id: "jetton", name: "Jetton", status: "soon" },
+      { id: "jetton", name: "Jetton", status: "live" },
       { id: "nft",    name: "NFT",    status: "soon" },
     ],
   },
@@ -130,10 +132,10 @@ export const router = createBrowserRouter([
 
       {
         path: "mint/ton",
-        element: <ChainShell chainId="ton" />,
+        element: <TonLayout />,
         children: [
           { index: true, element: <Navigate to="jetton" replace /> },
-          { path: "jetton", element: <ComingSoon /> },
+          { path: "jetton", element: <TonJettonMintPage /> },
           { path: "nft",    element: <ComingSoon /> },
         ],
       },
