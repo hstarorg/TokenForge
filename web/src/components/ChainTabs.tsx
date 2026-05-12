@@ -1,0 +1,24 @@
+import { NavLink } from "react-router-dom";
+import { getChain } from "../routes";
+
+interface Props {
+  chainId: string;
+}
+
+export function ChainTabs({ chainId }: Props) {
+  const chain = getChain(chainId);
+  return (
+    <nav className="asset-tabs">
+      {chain.assets.map((a) => (
+        <NavLink
+          key={a.id}
+          to={`/mint/${chainId}/${a.id}`}
+          className={({ isActive }) => (isActive ? "tab active" : "tab")}
+        >
+          {a.name}
+          {a.status === "soon" && <span className="tab-badge">soon</span>}
+        </NavLink>
+      ))}
+    </nav>
+  );
+}
