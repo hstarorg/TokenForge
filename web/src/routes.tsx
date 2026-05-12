@@ -5,6 +5,8 @@ import { Home } from "./pages/Home";
 import { ComingSoon } from "./pages/ComingSoon";
 import { EvmLayout } from "./chains/evm/EvmLayout";
 import { MintPage as EvmErc20MintPage } from "./chains/evm/erc20/MintPage";
+import { SolanaLayout } from "./chains/solana/SolanaLayout";
+import { MintPage as SolanaSplMintPage } from "./chains/solana/spl/MintPage";
 
 export type Status = "live" | "soon";
 
@@ -34,7 +36,7 @@ export const CHAINS: ChainSpec[] = [
     id: "solana",
     name: "Solana",
     assets: [
-      { id: "spl", name: "SPL Token", status: "soon" },
+      { id: "spl", name: "SPL Token", status: "live" },
       { id: "nft", name: "NFT",       status: "soon" },
     ],
   },
@@ -98,10 +100,10 @@ export const router = createBrowserRouter([
 
       {
         path: "mint/solana",
-        element: <ChainShell chainId="solana" />,
+        element: <SolanaLayout />,
         children: [
           { index: true, element: <Navigate to="spl" replace /> },
-          { path: "spl", element: <ComingSoon /> },
+          { path: "spl", element: <SolanaSplMintPage /> },
           { path: "nft", element: <ComingSoon /> },
         ],
       },

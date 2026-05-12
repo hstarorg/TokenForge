@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "pnpm --filter ./web dev",
     "build": "pnpm --filter ./web build",
+    "ui": "pnpm --filter ./web ui",
     "sync-abi": "tsx scripts/sync-abi.ts",
     "evm:build": "cd contracts/evm && forge build",
     "evm:test": "cd contracts/evm && forge test",

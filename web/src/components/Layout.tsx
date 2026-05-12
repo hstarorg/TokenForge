@@ -1,5 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Layout() {
   const { t } = useTranslation();
@@ -16,6 +17,7 @@ export function Layout() {
           />
           <span>{t("header.logo")}</span>
         </Link>
+        <ThemeToggle />
       </header>
       <main className="main">
         <Outlet />

@@ -4,6 +4,8 @@ interface ImportMetaEnv {
   readonly VITE_RPC_SEPOLIA?: string;
   readonly VITE_RPC_BASE_SEPOLIA?: string;
   readonly VITE_RPC_MAINNET?: string;
+  readonly VITE_RPC_SOLANA_DEVNET?: string;
+  readonly VITE_RPC_SOLANA_MAINNET?: string;
 }
 
 interface ImportMeta {
