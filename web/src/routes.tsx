@@ -82,6 +82,9 @@ export function getChain(id: string): ChainSpec {
   return c;
 }
 
+// Strip trailing slash from BASE_URL — React Router basename expects "" or "/<name>".
+const ROUTER_BASENAME = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -153,4 +156,4 @@ export const router = createBrowserRouter([
       { path: "*", element: <ComingSoon /> },
     ],
   },
-]);
+], { basename: ROUTER_BASENAME });

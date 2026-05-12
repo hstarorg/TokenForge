@@ -6,11 +6,15 @@ import {
 import { ChainShell } from "../../components/ChainShell";
 import { chainIdToNetwork, tonNetworkLabel } from "./networks";
 
+// Tonkeeper resolves manifestUrl server-side via its bridge, so it can't reach
+// localhost. In prod (GitHub Pages) the static manifest is served from
+// BASE_URL; in dev, set VITE_TONCONNECT_MANIFEST_URL to a tunneled public URL
+// if you need to test wallet connection locally.
 const MANIFEST_URL =
   import.meta.env.VITE_TONCONNECT_MANIFEST_URL ||
   (typeof window !== "undefined"
-    ? `${window.location.origin}/tonconnect-manifest.json`
-    : "/tonconnect-manifest.json");
+    ? `${window.location.origin}${import.meta.env.BASE_URL}tonconnect-manifest.json`
+    : `${import.meta.env.BASE_URL}tonconnect-manifest.json`);
 
 function NetworkBadge() {
   const wallet = useTonWallet();
