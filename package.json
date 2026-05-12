@@ -10,7 +10,8 @@
     "evm:build": "cd contracts/evm && forge build",
     "evm:test": "cd contracts/evm && forge test",
     "sol:build": "cd contracts/solana && anchor build",
-    "sol:test": "cd contracts/solana && anchor test"
+    "sol:test": "cd contracts/solana && anchor test",
+    "ton:build": "tsx scripts/build-ton.ts"
   },
   "devDependencies": {
     "tsx": "^4.19.0",

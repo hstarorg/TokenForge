@@ -62,6 +62,9 @@ for (const c of targets) {
     case "evm":
       syncEvm();
       break;
+    case "ton":
+      console.log("[sync-abi] ton: use `pnpm ton:build` instead — TON is built ephemerally from Acton's template, no source vendored");
+      break;
     default:
       console.log(`[sync-abi] ${c}: not implemented yet`);
   }
