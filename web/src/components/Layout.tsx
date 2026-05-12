@@ -9,7 +9,7 @@ export function Layout() {
       <header className="header">
         <Link to="/" className="logo">
           <img
-            src="/favicon.svg"
+            src={`${import.meta.env.BASE_URL}favicon.svg`}
             alt=""
             className="logo-mark"
             width={28}
