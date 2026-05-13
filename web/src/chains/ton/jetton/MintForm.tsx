@@ -1,15 +1,41 @@
+import { useMemo } from "react";
+import { Address } from "@ton/core";
+import {
+  buildJettonContent,
+  deriveMasterAddress,
+} from "./jetton-contract";
 import type { MintPageVM } from "./MintPageVM";
 
 interface Props {
   vm: MintPageVM;
   connected: boolean;
+  walletAddress?: string;
+  testnet: boolean;
   onSubmit: () => void;
 }
 
-export function MintForm({ vm, connected, onSubmit }: Props) {
+export function MintForm({ vm, connected, walletAddress, testnet, onSubmit }: Props) {
   const { form, status } = vm.useSnapshot();
   const submitting = status === "signing" || status === "pending";
   const disabled = submitting || !connected;
+
+  const previewAddress = useMemo(() => {
+    if (!walletAddress) return null;
+    try {
+      const admin = Address.parse(walletAddress);
+      const content = buildJettonContent({
+        name: form.name,
+        symbol: form.symbol,
+        decimals: String(form.decimals),
+        description: form.description,
+        image: form.image,
+        platform: "tokenforge",
+      });
+      return deriveMasterAddress({ admin, metadata: content, testnet }).address;
+    } catch {
+      return null;
+    }
+  }, [walletAddress, form.name, form.symbol, form.decimals, form.description, form.image, testnet]);
 
   return (
     <form
@@ -71,6 +97,16 @@ export function MintForm({ vm, connected, onSubmit }: Props) {
           onChange={(v) => vm.setField("renounceMint", v)}
         />
       </fieldset>
+
+      {previewAddress && (
+        <div className="preview-address">
+          <span className="field-label">Target master address (pre-deploy)</span>
+          <code>{previewAddress}</code>
+          <span className="field-hint">
+            Deterministic from your wallet + form fields. Verify it doesn't match any previously failed deployment before signing.
+          </span>
+        </div>
+      )}
 
       {!connected && (
         <p className="form-hint">Connect a wallet above to enable deploy.</p>

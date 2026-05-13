@@ -318,6 +318,27 @@ code {
 }
 .btn-link:hover { text-decoration: underline; }
 
+.preview-address {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 8px 0 4px;
+  padding: 10px 12px;
+  background: #f7f7f7;
+  border: 1px dashed #cfcfcf;
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+.preview-address code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  word-break: break-all;
+  font-size: 0.85rem;
+}
+.dark .preview-address {
+  background: #1a1a1a;
+  border-color: #333;
+}
+
 .result-card {
   margin-top: 16px;
   background: #fff;
