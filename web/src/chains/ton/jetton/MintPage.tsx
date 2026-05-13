@@ -28,6 +28,8 @@ export function MintPage() {
       <MintForm
         vm={vm}
         connected={connected}
+        walletAddress={address || undefined}
+        testnet={network === "testnet"}
         onSubmit={() => {
           if (!address || !network) return;
           void vm.submit({

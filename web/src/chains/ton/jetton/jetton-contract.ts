@@ -95,17 +95,22 @@ export function buildJettonContent(fields: JettonMetadataFields): Cell {
 
 // === MinterStorage layout ===
 //   totalSupply       : coins
-//   adminAddress      : addressOpt   (1-bit Maybe + address)
+//   adminAddress      : addressOpt   (bare MsgAddress; null = addr_none$00)
 //   nextAdminAddress  : addressOpt   (initial: null)
 //   metadata          : cell (ref)
+//
+// Tolk's `address?` (typed as "addressOpt" in the ABI) is serialized as a bare
+// MsgAddress with addr_none$00 for null — NOT a Maybe<address> wrapper. See
+// .acton/tolk-stdlib/common.tolk: "address? will be serialized as '00' (none address)".
+//
 // Wallet code is bundled inside the master code at compile time, so storage
 // does NOT carry it.
 
 export function buildMinterStorage(args: { admin: Address; metadata: Cell }): Cell {
   return beginCell()
     .storeCoins(0)
-    .storeBit(1).storeAddress(args.admin)
-    .storeBit(0)
+    .storeAddress(args.admin)     // adminAddress
+    .storeAddress(null)           // nextAdminAddress = addr_none
     .storeRef(args.metadata)
     .endCell();
 }
@@ -123,10 +128,10 @@ export function buildMintBody(args: {
     .storeUint(OP_INTERNAL_TRANSFER, 32)
     .storeUint(queryId, 64)
     .storeCoins(args.jettonAmount)
-    .storeBit(0)                  // transferInitiator (addressOpt) = null
-    .storeBit(0)                  // sendExcessesTo  (addressOpt) = null
+    .storeAddress(null)           // transferInitiator (addressOpt) = addr_none
+    .storeAddress(null)           // sendExcessesTo  (addressOpt) = addr_none
     .storeCoins(0)                // forwardTonAmount on wallet side
-    .storeBit(0)                  // forwardPayload: PayloadInline, empty value
+    .storeBit(0)                  // forwardPayload: PayloadInline union prefix (1-bit, NOT an address)
     .endCell();
 
   return beginCell()
