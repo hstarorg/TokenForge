@@ -14,7 +14,9 @@
     "ton:build": "tsx scripts/build-ton.ts",
     "starknet:build": "cd contracts/starknet && scarb build",
     "starknet:declare": "tsx scripts/starknet-declare.ts",
-    "sui:build": "tsx scripts/build-sui.ts"
+    "sui:build": "tsx scripts/build-sui.ts",
+    "aptos:build": "cd contracts/aptos/launcher && aptos move compile --named-addresses tokenforge=0x1",
+    "aptos:deploy": "tsx scripts/aptos-deploy.ts"
   },
   "devDependencies": {
     "starknet": "^10.0.2",
