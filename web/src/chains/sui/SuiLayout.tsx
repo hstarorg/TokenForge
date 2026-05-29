@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import {
   ConnectButton,
   SuiClientProvider,
@@ -8,6 +8,7 @@ import {
   useSuiClientContext,
 } from "@mysten/dapp-kit";
 import "@mysten/dapp-kit/dist/index.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Select,
   SelectContent,
@@ -75,6 +76,7 @@ function StatusActions() {
 }
 
 export function SuiLayout() {
+  const [queryClient] = useState(() => new QueryClient());
   const networkConfig = useMemo(
     () =>
       createNetworkConfig({
@@ -85,13 +87,12 @@ export function SuiLayout() {
   );
 
   return (
-    <SuiClientProvider
-      networks={networkConfig}
-      defaultNetwork={readSaved()}
-    >
-      <WalletProvider autoConnect>
-        <ChainShell chainId="sui" actions={<StatusActions />} />
-      </WalletProvider>
-    </SuiClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <SuiClientProvider networks={networkConfig} defaultNetwork={readSaved()}>
+        <WalletProvider autoConnect>
+          <ChainShell chainId="sui" actions={<StatusActions />} />
+        </WalletProvider>
+      </SuiClientProvider>
+    </QueryClientProvider>
   );
 }
