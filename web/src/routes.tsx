@@ -11,6 +11,8 @@ import { TonLayout } from "./chains/ton/TonLayout";
 import { MintPage as TonJettonMintPage } from "./chains/ton/jetton/MintPage";
 import { StarknetLayout } from "./chains/starknet/StarknetLayout";
 import { MintPage as StarknetErc20MintPage } from "./chains/starknet/erc20/MintPage";
+import { SuiLayout } from "./chains/sui/SuiLayout";
+import { MintPage as SuiCoinMintPage } from "./chains/sui/coin/MintPage";
 
 export type Status = "live" | "soon";
 
@@ -48,7 +50,7 @@ export const CHAINS: ChainSpec[] = [
     id: "sui",
     name: "Sui",
     assets: [
-      { id: "coin", name: "Coin", status: "soon" },
+      { id: "coin", name: "Coin", status: "live" },
       { id: "nft",  name: "NFT",  status: "soon" },
     ],
   },
@@ -117,10 +119,10 @@ export const router = createBrowserRouter([
 
       {
         path: "mint/sui",
-        element: <ChainShell chainId="sui" />,
+        element: <SuiLayout />,
         children: [
           { index: true, element: <Navigate to="coin" replace /> },
-          { path: "coin", element: <ComingSoon /> },
+          { path: "coin", element: <SuiCoinMintPage /> },
           { path: "nft",  element: <ComingSoon /> },
         ],
       },
