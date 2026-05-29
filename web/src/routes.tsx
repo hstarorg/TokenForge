@@ -9,6 +9,8 @@ import { SolanaLayout } from "./chains/solana/SolanaLayout";
 import { MintPage as SolanaSplMintPage } from "./chains/solana/spl/MintPage";
 import { TonLayout } from "./chains/ton/TonLayout";
 import { MintPage as TonJettonMintPage } from "./chains/ton/jetton/MintPage";
+import { StarknetLayout } from "./chains/starknet/StarknetLayout";
+import { MintPage as StarknetErc20MintPage } from "./chains/starknet/erc20/MintPage";
 
 export type Status = "live" | "soon";
 
@@ -70,7 +72,7 @@ export const CHAINS: ChainSpec[] = [
     id: "starknet",
     name: "Starknet",
     assets: [
-      { id: "erc20", name: "ERC-20", status: "soon" },
+      { id: "erc20", name: "ERC-20", status: "live" },
       { id: "nft",   name: "NFT",    status: "soon" },
     ],
   },
@@ -145,10 +147,10 @@ export const router = createBrowserRouter([
 
       {
         path: "mint/starknet",
-        element: <ChainShell chainId="starknet" />,
+        element: <StarknetLayout />,
         children: [
           { index: true, element: <Navigate to="erc20" replace /> },
-          { path: "erc20", element: <ComingSoon /> },
+          { path: "erc20", element: <StarknetErc20MintPage /> },
           { path: "nft",   element: <ComingSoon /> },
         ],
       },
