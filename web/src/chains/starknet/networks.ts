@@ -12,6 +12,10 @@ export interface StarknetNetworkConfig {
 
 const env = import.meta.env;
 
+// Cartridge's public RPC reports spec 0.9.0, which matches starknet.js v10's
+// supported channels (0.9 / 0.10). Blast deprecated their free tier and most
+// alternatives still serve 0.7/0.8 — Cartridge is the working public default.
+// Override with paid Alchemy / Nethermind / etc. via env if rate-limited.
 export const STARKNET_NETWORKS: StarknetNetworkConfig[] = [
   {
     id: "sepolia",
@@ -19,7 +23,7 @@ export const STARKNET_NETWORKS: StarknetNetworkConfig[] = [
     chain: sepolia,
     rpcUrl:
       env.VITE_STARKNET_SEPOLIA_RPC ||
-      "https://starknet-sepolia.public.blastapi.io/rpc/v0_7",
+      "https://api.cartridge.gg/x/starknet/sepolia",
     explorer: "https://sepolia.voyager.online",
   },
   {
@@ -28,7 +32,7 @@ export const STARKNET_NETWORKS: StarknetNetworkConfig[] = [
     chain: mainnet,
     rpcUrl:
       env.VITE_STARKNET_MAINNET_RPC ||
-      "https://starknet-mainnet.public.blastapi.io/rpc/v0_7",
+      "https://api.cartridge.gg/x/starknet/mainnet",
     explorer: "https://voyager.online",
   },
 ];

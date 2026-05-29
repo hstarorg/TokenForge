@@ -202,7 +202,6 @@ packages:
   '@aptos-labs/aptos-cli@3.0.0':
     resolution: {integrity: sha512-fw9Ph6pe9l/RW6LMqjpxrHiWo2T/gtYWZsRxgl4PqVroavGF13YEQWlUnjJfWgVi1wQHpQcoJ1eYbYsPFu2sVg==}
     engines: {node: '>=22'}
-    cpu: [x64, arm64]
     os: [darwin, linux, win32]
     hasBin: true
 

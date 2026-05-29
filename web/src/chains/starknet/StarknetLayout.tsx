@@ -1,7 +1,7 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import {
   StarknetConfig,
-  publicProvider,
+  jsonRpcProvider,
   useAccount,
   useConnect,
   useDisconnect,
@@ -9,9 +9,10 @@ import {
 } from "@starknet-react/core";
 import { mainnet, sepolia } from "@starknet-react/chains";
 import { InjectedConnector } from "starknetkit/injected";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { ChainShell } from "../../components/ChainShell";
-import { chainIdToNetwork } from "./networks";
+import { STARKNET_NETWORKS, chainIdToNetwork } from "./networks";
 
 function StatusActions() {
   const { address, status } = useAccount();
@@ -68,6 +69,7 @@ function StatusActions() {
 }
 
 export function StarknetLayout() {
+  const [queryClient] = useState(() => new QueryClient());
   // ArgentX, Braavos, MyTonWallet etc. inject `window.starknet_*`. Wallet
   // Standard discovery is handled by starknetkit/injected.
   const connectors = useMemo(
@@ -78,14 +80,32 @@ export function StarknetLayout() {
     [],
   );
 
+  // Don't use starknet-react's `publicProvider()` — it hardcodes
+  // specVersion="0.8.1", which starknet.js v10 rejects (v10 only ships RPC
+  // channels for 0.9 and 0.10). Wire our own jsonRpcProvider pointing at the
+  // Cartridge endpoint (spec 0.9.0) and tell the SDK to use the 0.9 channel.
+  const provider = useMemo(
+    () =>
+      jsonRpcProvider({
+        rpc: (chain) => {
+          const cfg = STARKNET_NETWORKS.find((n) => n.chain.id === chain.id);
+          if (!cfg) return null;
+          return { nodeUrl: cfg.rpcUrl, specVersion: "0.9.0" };
+        },
+      }),
+    [],
+  );
+
   return (
-    <StarknetConfig
-      chains={[sepolia, mainnet]}
-      provider={publicProvider()}
-      connectors={connectors}
-      autoConnect
-    >
-      <ChainShell chainId="starknet" actions={<StatusActions />} />
-    </StarknetConfig>
+    <QueryClientProvider client={queryClient}>
+      <StarknetConfig
+        chains={[sepolia, mainnet]}
+        provider={provider}
+        connectors={connectors}
+        autoConnect
+      >
+        <ChainShell chainId="starknet" actions={<StatusActions />} />
+      </StarknetConfig>
+    </QueryClientProvider>
   );
 }
