@@ -13,7 +13,8 @@
     "sol:test": "cd contracts/solana && anchor test",
     "ton:build": "tsx scripts/build-ton.ts",
     "starknet:build": "cd contracts/starknet && scarb build",
-    "starknet:declare": "tsx scripts/starknet-declare.ts"
+    "starknet:declare": "tsx scripts/starknet-declare.ts",
+    "sui:build": "tsx scripts/build-sui.ts"
   },
   "devDependencies": {
     "starknet": "^10.0.2",
