@@ -11,9 +11,15 @@
     "evm:test": "cd contracts/evm && forge test",
     "sol:build": "cd contracts/solana && anchor build",
     "sol:test": "cd contracts/solana && anchor test",
-    "ton:build": "tsx scripts/build-ton.ts"
+    "ton:build": "tsx scripts/build-ton.ts",
+    "starknet:build": "cd contracts/starknet && scarb build",
+    "starknet:declare": "tsx scripts/starknet-declare.ts",
+    "sui:build": "tsx scripts/build-sui.ts",
+    "aptos:build": "cd contracts/aptos/launcher && aptos move compile --named-addresses tokenforge=0x1",
+    "aptos:deploy": "tsx scripts/aptos-deploy.ts"
   },
   "devDependencies": {
+    "starknet": "^10.0.2",
     "tsx": "^4.19.0",
     "typescript": "^5.6.0"
   }

@@ -1,6 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { Layout } from "./components/Layout";
-import { ChainShell } from "./components/ChainShell";
 import { Home } from "./pages/Home";
 import { ComingSoon } from "./pages/ComingSoon";
 import { EvmLayout } from "./chains/evm/EvmLayout";
@@ -9,6 +8,12 @@ import { SolanaLayout } from "./chains/solana/SolanaLayout";
 import { MintPage as SolanaSplMintPage } from "./chains/solana/spl/MintPage";
 import { TonLayout } from "./chains/ton/TonLayout";
 import { MintPage as TonJettonMintPage } from "./chains/ton/jetton/MintPage";
+import { StarknetLayout } from "./chains/starknet/StarknetLayout";
+import { MintPage as StarknetErc20MintPage } from "./chains/starknet/erc20/MintPage";
+import { SuiLayout } from "./chains/sui/SuiLayout";
+import { MintPage as SuiCoinMintPage } from "./chains/sui/coin/MintPage";
+import { AptosLayout } from "./chains/aptos/AptosLayout";
+import { MintPage as AptosFaMintPage } from "./chains/aptos/fa/MintPage";
 
 export type Status = "live" | "soon";
 
@@ -46,7 +51,7 @@ export const CHAINS: ChainSpec[] = [
     id: "sui",
     name: "Sui",
     assets: [
-      { id: "coin", name: "Coin", status: "soon" },
+      { id: "coin", name: "Coin", status: "live" },
       { id: "nft",  name: "NFT",  status: "soon" },
     ],
   },
@@ -54,7 +59,7 @@ export const CHAINS: ChainSpec[] = [
     id: "aptos",
     name: "Aptos",
     assets: [
-      { id: "coin", name: "Coin", status: "soon" },
+      { id: "coin", name: "Coin", status: "live" },
       { id: "nft",  name: "NFT",  status: "soon" },
     ],
   },
@@ -70,7 +75,7 @@ export const CHAINS: ChainSpec[] = [
     id: "starknet",
     name: "Starknet",
     assets: [
-      { id: "erc20", name: "ERC-20", status: "soon" },
+      { id: "erc20", name: "ERC-20", status: "live" },
       { id: "nft",   name: "NFT",    status: "soon" },
     ],
   },
@@ -115,20 +120,20 @@ export const router = createBrowserRouter([
 
       {
         path: "mint/sui",
-        element: <ChainShell chainId="sui" />,
+        element: <SuiLayout />,
         children: [
           { index: true, element: <Navigate to="coin" replace /> },
-          { path: "coin", element: <ComingSoon /> },
+          { path: "coin", element: <SuiCoinMintPage /> },
           { path: "nft",  element: <ComingSoon /> },
         ],
       },
 
       {
         path: "mint/aptos",
-        element: <ChainShell chainId="aptos" />,
+        element: <AptosLayout />,
         children: [
           { index: true, element: <Navigate to="coin" replace /> },
-          { path: "coin", element: <ComingSoon /> },
+          { path: "coin", element: <AptosFaMintPage /> },
           { path: "nft",  element: <ComingSoon /> },
         ],
       },
@@ -145,10 +150,10 @@ export const router = createBrowserRouter([
 
       {
         path: "mint/starknet",
-        element: <ChainShell chainId="starknet" />,
+        element: <StarknetLayout />,
         children: [
           { index: true, element: <Navigate to="erc20" replace /> },
-          { path: "erc20", element: <ComingSoon /> },
+          { path: "erc20", element: <StarknetErc20MintPage /> },
           { path: "nft",   element: <ComingSoon /> },
         ],
       },

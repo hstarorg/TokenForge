@@ -1,0 +1,17 @@
+[package]
+name = "tokenforge_erc20"
+version = "0.1.0"
+edition = "2024_07"
+description = "TokenForge ERC-20 with platform marker event"
+license = "MIT"
+
+[dependencies]
+starknet = "2.13.1"
+openzeppelin_token = "3.0.0"
+openzeppelin_interfaces = "2.1.0"
+
+[[target.starknet-contract]]
+sierra = true
+casm = true
+
+[lib]

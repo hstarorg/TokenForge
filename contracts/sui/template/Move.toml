@@ -1,0 +1,10 @@
+[package]
+name = "tokenforge_coin_template"
+edition = "2024.beta"
+license = "MIT"
+
+# Sui / MoveStdlib / Bridge / SuiSystem are auto-resolved by the installed sui
+# CLI — do not list them here explicitly.
+
+[addresses]
+tokenforge_coin_template = "0x0"
