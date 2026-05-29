@@ -1,0 +1,11 @@
+[package]
+name = "tokenforge"
+version = "0.1.0"
+license = "MIT"
+
+[dependencies]
+AptosFramework = { git = "https://github.com/aptos-labs/aptos-framework.git", subdir = "aptos-framework", rev = "aptos-release-v1.27" }
+
+[addresses]
+# Resolved at publish time to the deploying account address.
+tokenforge = "_"
