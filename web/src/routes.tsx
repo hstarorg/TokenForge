@@ -1,6 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { Layout } from "./components/Layout";
-import { ChainShell } from "./components/ChainShell";
 import { Home } from "./pages/Home";
 import { ComingSoon } from "./pages/ComingSoon";
 import { EvmLayout } from "./chains/evm/EvmLayout";
@@ -13,6 +12,8 @@ import { StarknetLayout } from "./chains/starknet/StarknetLayout";
 import { MintPage as StarknetErc20MintPage } from "./chains/starknet/erc20/MintPage";
 import { SuiLayout } from "./chains/sui/SuiLayout";
 import { MintPage as SuiCoinMintPage } from "./chains/sui/coin/MintPage";
+import { AptosLayout } from "./chains/aptos/AptosLayout";
+import { MintPage as AptosFaMintPage } from "./chains/aptos/fa/MintPage";
 
 export type Status = "live" | "soon";
 
@@ -58,7 +59,7 @@ export const CHAINS: ChainSpec[] = [
     id: "aptos",
     name: "Aptos",
     assets: [
-      { id: "coin", name: "Coin", status: "soon" },
+      { id: "coin", name: "Coin", status: "live" },
       { id: "nft",  name: "NFT",  status: "soon" },
     ],
   },
@@ -129,10 +130,10 @@ export const router = createBrowserRouter([
 
       {
         path: "mint/aptos",
-        element: <ChainShell chainId="aptos" />,
+        element: <AptosLayout />,
         children: [
           { index: true, element: <Navigate to="coin" replace /> },
-          { path: "coin", element: <ComingSoon /> },
+          { path: "coin", element: <AptosFaMintPage /> },
           { path: "nft",  element: <ComingSoon /> },
         ],
       },

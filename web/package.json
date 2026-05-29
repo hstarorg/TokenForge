@@ -11,6 +11,8 @@
     "ui": "shadcn"
   },
   "dependencies": {
+    "@aptos-labs/ts-sdk": "^7.1.0",
+    "@aptos-labs/wallet-adapter-react": "^8.3.3",
     "@bizjs/biz-utils": "^0.4.1",
     "@fontsource-variable/geist": "^5.2.8",
     "@mysten/dapp-kit": "^1.0.6",
