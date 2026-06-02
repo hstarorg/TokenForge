@@ -1,0 +1,12 @@
+{
+  "name": "tokenforge-zama-contracts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Foundry project for the Zama (fhEVM) Confidential ERC-7984 token template.",
+  "dependencies": {
+    "@fhevm/solidity": "^0.11.1",
+    "@openzeppelin/confidential-contracts": "^0.4.0",
+    "@openzeppelin/contracts": "^5.1.0",
+    "encrypted-types": "^0.0.4"
+  }
+}
