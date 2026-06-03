@@ -48,7 +48,36 @@ function syncEvm(): void {
   }
 }
 
-const ALL_CHAINS = ["evm", "solana", "sui", "aptos", "ton", "starknet"] as const;
+function syncZama(): void {
+  const srcDir = join(REPO_ROOT, "contracts/zama/out");
+  const dstDir = join(REPO_ROOT, "web/src/chains/zama/abi");
+
+  if (!existsSync(srcDir)) {
+    console.warn(`[sync-abi] zama: ${relative(REPO_ROOT, srcDir)} missing — run 'pnpm zama:build' first`);
+    return;
+  }
+
+  mkdirSync(dstDir, { recursive: true });
+
+  const name = "TokenForgeConfidential";
+  const artifactPath = join(srcDir, `${name}.sol`, `${name}.json`);
+  if (!existsSync(artifactPath)) {
+    console.warn(`[sync-abi] zama: ${name} artifact not found at ${relative(REPO_ROOT, artifactPath)}`);
+    return;
+  }
+  const artifact = JSON.parse(readFileSync(artifactPath, "utf8")) as {
+    abi: unknown;
+    bytecode: { object: string } | string;
+  };
+  const bytecode =
+    typeof artifact.bytecode === "string" ? artifact.bytecode : artifact.bytecode.object;
+  const out = { abi: artifact.abi, bytecode };
+  const dstPath = join(dstDir, `${name}.json`);
+  writeFileSync(dstPath, JSON.stringify(out, null, 2) + "\n");
+  console.log(`[sync-abi] zama: ${name} → ${relative(REPO_ROOT, dstPath)}`);
+}
+
+const ALL_CHAINS = ["evm", "solana", "sui", "aptos", "ton", "starknet", "zama"] as const;
 type Chain = (typeof ALL_CHAINS)[number];
 
 const args = process.argv.slice(2);
@@ -61,6 +90,9 @@ for (const c of targets) {
   switch (c) {
     case "evm":
       syncEvm();
+      break;
+    case "zama":
+      syncZama();
       break;
     case "ton":
       console.log("[sync-abi] ton: use `pnpm ton:build` instead — TON is built ephemerally from Acton's template, no source vendored");

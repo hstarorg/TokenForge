@@ -14,6 +14,8 @@ import { SuiLayout } from "./chains/sui/SuiLayout";
 import { MintPage as SuiCoinMintPage } from "./chains/sui/coin/MintPage";
 import { AptosLayout } from "./chains/aptos/AptosLayout";
 import { MintPage as AptosFaMintPage } from "./chains/aptos/fa/MintPage";
+import { ZamaLayout } from "./chains/zama/ZamaLayout";
+import { MintPage as ZamaConfidentialMintPage } from "./chains/zama/confidential/MintPage";
 
 export type Status = "live" | "soon";
 
@@ -77,6 +79,13 @@ export const CHAINS: ChainSpec[] = [
     assets: [
       { id: "erc20", name: "ERC-20", status: "live" },
       { id: "nft",   name: "NFT",    status: "soon" },
+    ],
+  },
+  {
+    id: "zama",
+    name: "Zama",
+    assets: [
+      { id: "confidential", name: "Confidential (ERC-7984)", status: "live" },
     ],
   },
 ];
@@ -155,6 +164,15 @@ export const router = createBrowserRouter([
           { index: true, element: <Navigate to="erc20" replace /> },
           { path: "erc20", element: <StarknetErc20MintPage /> },
           { path: "nft",   element: <ComingSoon /> },
+        ],
+      },
+
+      {
+        path: "mint/zama",
+        element: <ZamaLayout />,
+        children: [
+          { index: true, element: <Navigate to="confidential" replace /> },
+          { path: "confidential", element: <ZamaConfidentialMintPage /> },
         ],
       },
 

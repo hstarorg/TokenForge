@@ -32,3 +32,6 @@ contracts/ton/dist/
 
 # Starknet (Scarb)
 contracts/starknet/target/
+
+# Zama
+cache

@@ -16,7 +16,8 @@
     "starknet:declare": "tsx scripts/starknet-declare.ts",
     "sui:build": "tsx scripts/build-sui.ts",
     "aptos:build": "cd contracts/aptos/launcher && aptos move compile --named-addresses tokenforge=0x1",
-    "aptos:deploy": "tsx scripts/aptos-deploy.ts"
+    "aptos:deploy": "tsx scripts/aptos-deploy.ts",
+    "zama:build": "cd contracts/zama && forge build"
   },
   "devDependencies": {
     "starknet": "^10.0.2",
